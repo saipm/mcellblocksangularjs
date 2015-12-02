@@ -1,0 +1,111 @@
+
+<html>
+<head>
+ <style>
+    .moreinfo {
+    	  display: inline-block;
+    	} 
+    	TD{font-family: Arial;
+    	 font-size: 11pt;}
+    </style>
+    <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript">
+    var deviceId;
+    var processed_json = new Array(); 
+    var processed_json1 = new Array();  
+    $( document ).ready(function() {
+        console.log( "document loaded" );	
+        	var pathname = window.location.pathname; // Returns path only
+        	var url      = window.location.href; 
+      deviceId = url.substr(url.indexOf("=") + 1);
+      document.getElementById("test").innerHTML=deviceId;
+      $.getJSON('http://localhost:8082/ngdemo/web/devices/command/'+deviceId, function(data) {
+    	  var out = "<table bgcolor='#ECEEEF' align='right' rules= rows> ";
+    	  for(var i=0;i<data.length;i++){
+    		  out=out+"<tr background-color:#669900 style='border: 2px solid white;'><td>"+data[i].data+"</td></tr>"
+    	  }
+    	  out=out+"</table>";
+    	  /* document.getElementById("test").innerHTML=out; */  
+      });
+      $.getJSON('http://localhost:8082/ngdemo/web/devices/memory/'+deviceId, function(data) {
+    	  for (i = 0; i < data.length; i++){
+              processed_json.push([data[i].device, parseInt(data[i].app)]);
+          	}
+    	  Highcharts.setOptions({
+    		    /*  colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263','#6AF9C4'] */
+    		    /*  colors: ['#4D4D4D','#5DA5DA','#FAA43A', '#60BD68','#F17CB0', '#B2912F', '#B276B2','#DECF3F', '#F15854'] */
+    	 	    });
+    	  var chart;
+    	  chart= $('#container2').highcharts({
+               chart: {
+               	renderTo:"container",
+                   type: "pie"
+               },
+               title: {
+                   text: "Memory(in KB)"
+               },
+               plotOptions: {
+                   pie: {
+                       allowPointSelect: true,
+                       cursor: 'pointer',
+                       dataLabels: {
+                           enabled: false
+                       },
+                       showInLegend: true
+                   }
+               },
+               series: [{
+               name:"Memory",
+               data:processed_json,
+           }] 
+       }); 
+      }); 
+      $.getJSON('http://localhost:8082/ngdemo/web/devices/memoryperapp/'+deviceId, function(data1) {
+    	  for (i = 0; i < data1.length; i++){
+              processed_json1.push([data1[i].app, parseInt(data1[i].device)]);
+          	}
+    	  Highcharts.setOptions({
+    		    /*  colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263','#6AF9C4'] */
+    		    /*  colors: ['#4D4D4D','#5DA5DA','#FAA43A', '#60BD68','#F17CB0', '#B2912F', '#B276B2','#DECF3F', '#F15854'] */
+    		   });
+    	  var chart1;
+    	  chart1= $('#container1').highcharts({
+               chart: {
+               	renderTo:"container",
+                   type: "pie"
+               },
+               title: {
+                   text: "Memory usage per application(in KB)"
+               },
+               plotOptions: {
+                   pie: {
+                       allowPointSelect: true,
+                       cursor: 'pointer',
+                       dataLabels: {
+                           enabled: false
+                       },
+                       showInLegend: true
+                   }
+               },
+               series: [{
+               name:"Memory",
+               data:processed_json1,
+           }] 
+       }); 
+      }); 
+    });
+ 
+    </script>
+</head>
+<body>
+  
+  <div class="moreinfo" id="container1" style="margin-bottom:200px;height:800px;width:550px;"></div>
+  <div class="moreinfo" id="container2" style=" margin-left:300px; margin-bottom:-750px;  /*margin-left:900px; */height:500px;width:350px;"></div>  
+<div class="moreinfo" id="test">
+</div>
+
+     <!-- <iframe src="http://techcrunch.com"></iframe> -->
+</body>
+</html>

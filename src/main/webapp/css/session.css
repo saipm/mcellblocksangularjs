@@ -1,0 +1,30 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,700,600,800);
+@-webkit-keyframes rotate { from { -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -ms-transform: rotate(0deg); transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); transform: rotate(360deg); } }
+
+*, html, body { -webkit-font-smoothing: antialiased; }
+
+a { color: #39464e; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+input, textarea, select { font-family: "Open Sans", "Helvetica", "Arial", "FreeSans", "Verdana", "Tahoma", "Lucida Sans", "Lucida Sans Unicode", "Luxi Sans", sans-serif; }
+
+.errorlist { font-size: .85em; }
+.errorlist li { margin-bottom: 5px; color: #f36e65; }
+
+body { height: auto; }
+body:before { display: none; }
+
+#session { position: relative; margin: 100px auto; width: 350px; left: 50px; border-top: solid 1px #EBEBEB; }
+
+a { color: #2795ee; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h2 { font-size: 1.7em; font-weight: 700; color: #39464e; margin-top: 10px; }
+
+#session-form fieldset { margin-bottom: 10px; padding: 15px 0 20px; }
+#session-form p label { display: none; }
+#session-form p input { width: 332px; }
+#session-form .humanCheck { font-size: .85em; margin-top: 5px; }
+#session-form .submitCont { padding-top: 0; margin-left: 0; }
+#session-form .errorlist { margin: 0; }
